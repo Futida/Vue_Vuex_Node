@@ -42,7 +42,6 @@ router.route('/update/:id').post(function(req, res) {
             item.name = req.body.name;
             item.lastName = req.body.lastName;
             item.email = req.body.email;
-
             item.save().then(item => {
                 res.json('Update complete');
             })

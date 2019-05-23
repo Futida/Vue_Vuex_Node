@@ -3,8 +3,8 @@
       <div class="main__title">
         <div class="main__title__content">
           <div class="main__title__content-text">
-            Vue.js Express MongoDB <br>
-            Educational project
+            {{ $t('greeting') }} <br>
+            {{ $t('addGreeting') }}
           </div>
           <div class="main__title__content-background">
             <img src="../static/img/logo.png">

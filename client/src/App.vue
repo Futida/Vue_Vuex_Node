@@ -2,7 +2,9 @@
   <div id="root">
     <b-navbar toggleable="md" type="dark" variant="dark" class="justify-content-start">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand class="ml-3" to="/" left> Main</b-navbar-brand>
+      <b-navbar-brand class="brand d-flex ml-2 mr-2" to="/" left>
+        <img src="./static/img/vue.png">
+      </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item
@@ -77,6 +79,15 @@
   #root {
     font-family: Roboto, sans-serif;
     font-size: 16px;
+    .navbar-brand {
+      width: 38px;
+      height: 38px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 
   a {

@@ -1,6 +1,9 @@
 <template>
   <b-container>
-    <table class="table table-bordered table-responsive-md table-hover mt-5">
+    <div v-if="isBusy" class="spinner-container">
+      <div class="spinner-border" role="status"></div>
+    </div>
+    <table v-else class="table table-bordered table-responsive-md table-hover mt-5">
       <thead class="thead-inverse">
       <th>Name</th>
       <th>Last name</th>
@@ -15,12 +18,18 @@
         <td class="d-flex justify-content-around">
           <b-button variant="primary" @click="showEditModal(user)">Edit</b-button>
           <b-button variant="danger" size="sm" @click="deleteUser(user._id)">Delete</b-button>
+          <b-button variant="link" :to="'users/' + user._id">
+            <font-awesome-icon
+              size="lg"
+              icon="arrow-circle-right"
+            />
+          </b-button>
         </td>
       </tr>
       </tbody>
     </table>
     <Pagination :current="paginator.currentPage"
-                :total="this.listUsers.length"
+                :total="listUsers.length"
                 :perPage="paginator.perPage"
                 @change="computedCountUsers">
     </Pagination>
@@ -54,7 +63,8 @@
                       v-model="editUser.lastName"
         ></b-form-input>
       </b-form-group>
-      <b-button class="mt-3" variant="outline-primary" block @click="updateUser(editUser._id)">Edit</b-button>
+      <b-button class="mt-3" variant="outline-primary" block @click="updateUser(editUser)">Edit
+      </b-button>
     </b-modal>
   </b-container>
 </template>
@@ -62,11 +72,12 @@
 <script>
 
   import Pagination from './pagination/Pagination.vue'
+  import { mapActions, mapGetters, mapState } from 'vuex';
+  import * as types from '~/store/types';
 
   export default {
     data() {
       return {
-        listUsers: [],
         editUser: [],
         paginator: {
           currentPage: 1,
@@ -78,42 +89,47 @@
         }
       }
     },
-
     components: { Pagination },
+
     created() {
       this.getUsers();
     },
     methods: {
-      getUsers() {
-        let uri = 'http://localhost:4000/users';
-        this.axios.get(uri).then((response) => {
-          this.listUsers = response.data
-        })
-      },
-      deleteUser(id) {
-        let uri = 'http://localhost:4000/users/delete/' + id;
-        this.axios.get(uri).then(() => {
-          this.getUsers()
-        });
+      ...mapActions({
+        getUsers: types.GET_LIST_USERS,
+        deleteUser: types.DELETE_USER,
+        UPDATE_USER: types.UPDATE_USER,
+      }),
+      updateUser(data) {
+        this.UPDATE_USER(data);
+        this.$refs.editModal.hide();
       },
       showEditModal(item) {
         this.$refs.editModal.show();
         this.editUser = { ...item };
-      },
-      updateUser(id) {
-        let uri = 'http://localhost:4000/users/update/' + id;
-        this.axios.post(uri, this.editUser).then(() => {
-          this.getUsers()
-        });
-        this.$refs.editModal.hide();
       },
       computedCountUsers(page) {
         this.paginator.currentPage = page;
         this.sliceCountUsers.end = (page * this.paginator.perPage);
         this.sliceCountUsers.start = this.sliceCountUsers.end - this.paginator.perPage;
       }
+    },
+    computed: {
+      ...mapGetters({
+        listUsers: types.LIST_USERS,
+      }),
+      ...mapState(['isBusy']),
     }
   }
 </script>
+
+<style lang="scss">
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+  }
+</style>
 
 

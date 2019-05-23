@@ -1,32 +1,3 @@
-// import Localize from 'v-localize';
-// import Vue from 'vue'
-
-// Vue.use(Localize);
-
-// export const localize = Localize.config({
-//   default: 'en-US',
-//   available: ['en-US', 'ru-RU', {
-//     locale: 'ru-RU',
-//     orientation: 'rtl',
-//   }],
-//   fallback: '?',
-//   localizations: {
-//     "en-US": {
-//       nav: {
-//         createUser: 'Create user',
-//         listUsers: 'List users'
-//       }
-//     },
-//     "ru-RU": {
-//       nav: {
-//         createUser: 'Создать пользователя',
-//         listUsers: 'Список пользователей'
-//       }
-//     },
-//   }
-// });
-
-
 import VueI18n from 'vue-i18n';
 import Vue from 'vue';
 
@@ -38,11 +9,31 @@ const messages = {
       createUser: 'Create user',
       listUsers: 'List users',
     },
+    greeting:"Vue.js is awesome",
+    addGreeting: "Training project",
+    user: {
+      enterEmail: 'Enter e-mail:',
+      enterName: 'Enter name:',
+      enterLastName: 'Enter last name:',
+      create: 'Create',
+      reset: 'Reset fields',
+      emailIncorrect: 'Incorrect email'
+    }
   },
   'ru': {
     nav: {
       createUser: 'Создать пользователя',
       listUsers: 'Список пользователей',
+    },
+    greeting:"Vue.js - это здорово",
+    addGreeting: "Тренировочный проект",
+    user: {
+      enterEmail: 'Введите e-mail:',
+      enterName: 'Ввведите имя:',
+      enterLastName: 'Введите фамилию:',
+      create: 'Cоздать',
+      reset: 'Очистить поля',
+      emailIncorrect: 'Неверный email'
     }
   }
 };

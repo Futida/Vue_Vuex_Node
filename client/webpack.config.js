@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const staticResources = 'static/';
-console.log(path.resolve('src/'));
+
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -88,7 +88,15 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
-    port: 8000
+    port: 8000,
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:4000',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {"^/api": ""},
+      },
+    }
   },
   performance: {
     hints: false
